@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <h1 class="header">Search for files on Egnyte</h1>
+
+  <div class="searchForm">
+    <form action="/search" method="POST">
+      <label for="query">Query: </label>
+      <input type="text" name="query" id="query" placeholder="'Florida' 'PDF'" />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</body>
+
+</html>

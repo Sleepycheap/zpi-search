@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+</head>
+
+<body>
+  <h1 class="search-results">Search Results</h1>
+
+  <div id="results">
+    <% results.forEach(result=> { %>
+      <p class="name">
+        Name: <%=result.name %>
+      </p>
+      <p class="path">
+        Path: <%=result.path %>
+      </p>
+      <%});%>
+  </div>
+</body>
+
+</html>
