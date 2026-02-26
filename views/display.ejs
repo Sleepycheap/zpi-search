@@ -16,6 +16,18 @@
     <form action="/search" method="POST">
       <label for="query">Query: </label>
       <input type="text" name="query" id="query" placeholder="'Florida' 'PDF'" />
+      <label for="type">File/Folder</label>
+      <select name="type" id="type-select">
+        <option value="file">File</option>
+        <option value="folder">Folder</option>
+      </select>
+      <label for="operator">Any/All</label>
+      <select name="operator" id="any-select">
+        <option value="any">ANY</option>
+        <option value="all">All</option>
+      </select>
+      <label for="folder">Folder path to search</label>
+      <input for="folder" name="folder" id="folder-select" placeholder="/Projects /Design-Engineering">
       <button type="submit">Search</button>
     </form>
   </div>
