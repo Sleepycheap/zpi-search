@@ -11,14 +11,27 @@
   <h1 class="search-results">Search Results</h1>
 
   <div id="results">
-    <% results.forEach(result=> { %>
-      <p class="name">
-        Name: <%=result.name %>
-      </p>
-      <p class="path">
-        Path: <%=result.path %>
-      </p>
-      <%});%>
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Path</th>
+          <th scope="col">Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% results.forEach(result=> { %>
+          <tr>
+            <th scope="row" id="t-name">
+              <%= result.name %>
+            </th>
+            <th scope="row" id="t-path">
+              <%= result.path %>
+            </th>
+          </tr>
+          <%});%>
+      </tbody>
+    </table>
   </div>
 </body>
 

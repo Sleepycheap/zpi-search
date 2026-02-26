@@ -1,0 +1,8 @@
+.header {
+  border-bottom: black 1px solid;
+  height: 100px;
+  /* margin-left: 200px; */
+  background-color: #5a4099;
+  text-align: justify;
+  color: white;
+}

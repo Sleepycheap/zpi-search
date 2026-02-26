@@ -1,15 +1,14 @@
-// import { resolveInclude } from 'ejs';
-import { search } from '../utils/egnyte.js';
+import { search, createLink } from '../utils/egnyte.js';
 
 export async function searchResults(req, res) {
-  // const r = req;
   const params = {
     type: req.body.type,
     operator: req.body.operator,
-    folder: req.body.folder,
+    folder: '/Shared/' + req.body.folder,
   };
-  // const sParams = new URLSearchParams(params).toString();
   const { query } = req.body;
+  console.log(`query`, query);
+  console.log('params', params);
   const results = await search(query, params);
   console.log('Result', results);
   res.render('showResults', {
@@ -19,6 +18,6 @@ export async function searchResults(req, res) {
 
 export async function showResults(req, res) {
   res.render('showResults.ejs', {
-    // results: results,
+    results: results,
   });
 }
