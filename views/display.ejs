@@ -11,24 +11,37 @@
 </head>
 
 <body>
-  <section id="header">
-    <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
-    <h1 class="header">Search for files on Egnyte</h1>
-  </section>
+  <% if (locals.user) {%>
+    <section id="header">
+      <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
+      <h1 class="header">Search for files on Egnyte</h1>
+    </section>
 
-  <div class="searchForm">
-    <form action="/search" method="POST" id="search">
-      <label for="query" class="q-label">Query: </label>
-      <input type="text" name="query" id="query" placeholder="'Florida' 'PDF'" />
-      <label for="folder">Folder path to search</label>
-      <select name="folder" id="folder-select">
-        <option value="projects">Projects</option>
-        <option value="design-engineering">Design-Engineering</option>
-        <option value="restoration & maintenance">Restoration & Maintenance</option>
-      </select>
-      <button type="submit" class="s-btn">Search</button>
-    </form>
-  </div>
+    <div class="searchForm">
+      <form action="/search" method="POST" id="search">
+        <label for="query" class="q-label">Query: </label>
+        <input type="text" name="query" id="query" placeholder="'Florida' 'PDF'" />
+        <label for="folder">Folder path to search</label>
+        <select name="folder" id="folder-select">
+          <option value="Projects">Projects</option>
+          <option value="Design-Engineering">Design-Engineering</option>
+          <option value="Restoration & Maintenance">Restoration & Maintenance</option>
+        </select>
+        <button type="submit" class="s-btn">Search</button>
+      </form>
+    </div>
+    <% } else { %>
+      <h1>Please log in</h1>
+      <h3><a href="/register">or register</a></h3>
+      <form action="/log-in" method="POST">
+        <label for="username">Username</label>
+        <input id="username" name="username" placeholder="first.last" type="text" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+        <button type="submit">Login</button>
+      </form>
+      <%}%>
+
 </body>
 
 </html>

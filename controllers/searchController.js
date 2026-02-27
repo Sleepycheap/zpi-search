@@ -1,4 +1,5 @@
-import { search, createLink } from '../utils/egnyte.js';
+import { search } from '../utils/egnyte.js';
+import { stripName } from '../utils/stripName.js';
 
 export async function searchResults(req, res) {
   const params = {
@@ -7,17 +8,10 @@ export async function searchResults(req, res) {
     folder: '/Shared/' + req.body.folder,
   };
   const { query } = req.body;
-  console.log(`query`, query);
-  console.log('params', params);
   const results = await search(query, params);
   console.log('Result', results);
   res.render('showResults', {
-    results: results,
-  });
-}
-
-export async function showResults(req, res) {
-  res.render('showResults.ejs', {
-    results: results,
+    query,
+    results,
   });
 }

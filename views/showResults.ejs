@@ -5,29 +5,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results</title>
+  <link rel="stylesheet" href="/css/results.css">
 </head>
 
 <body>
-  <h1 class="search-results">Search Results</h1>
+  <section id="header">
+    <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
+    <h1 class="search-header">Search Results for '<%= query %>'
+    </h1>
+  </section>
 
   <div id="results">
     <table class="results-table">
       <thead>
         <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Path</th>
-          <th scope="col">Link</th>
+          <th scope="col" class="h-col">Name</th>
+          <th scope="col" class="h-col">Path</th>
         </tr>
       </thead>
       <tbody>
         <% results.forEach(result=> { %>
           <tr>
-            <th scope="row" id="t-name">
+            <td scope="row" id="t-name" class="row">
               <%= result.name %>
-            </th>
-            <th scope="row" id="t-path">
-              <%= result.path %>
-            </th>
+            </td>
+            <% const root=result.path.split('/')[2] %>
+              <% const r=root %>
+                <% const p=result.path.split(r)[1] %>
+                  <% let path='' %>
+                    <% if (root==='Projects' ) { %>
+                      <% path='Y:' + p %>
+                        <% } else if (root==='Design-Engineering' ) { %>
+                          <% path='R:' + p %>
+                            <% } else if (root==='Restortion & Maintenance' ) { %>
+                              <% path='K:' + p %>
+                                <% }; %>
+                                  <td scope="row" id="t-path" class="row">
+                                    <%= path %>
+                                  </td>
           </tr>
           <%});%>
       </tbody>
