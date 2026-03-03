@@ -1,14 +1,18 @@
-import express from 'express';
-import axios from 'axios';
-import fs from 'node:fs';
-import 'dotenv/config.js';
+import express from "express";
+import axios from "axios";
+import fs from "node:fs";
+import "dotenv/config.js";
 
 const headers = {
-  Authorization: `Bearer ${process.env.TOKEN}`,
+  Authorization: `Bearer ${process.env.DEV_TOKEN}`,
 };
 
-const url1 = 'https://splashtacular.egnyte.com/pubapi/v1';
-const url2 = 'https://splashtacular.egnyte.com/pubapi/v2';
+const prod_headers = {
+  Authorization: `Bearer ${process.env.PROD_TOKEN}`,
+};
+
+const url1 = "https://splashtacular.egnyte.com/pubapi/v1";
+const url2 = "https://splashtacular.egnyte.com/pubapi/v2";
 
 export async function getFolders(root) {
   try {
@@ -24,26 +28,29 @@ export async function getFolders(root) {
       const r = await axios.get(u, {
         headers: headers,
       });
-      console.log('R:', r.data);
+      console.log("R:", r.data);
     }
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function search(query, params = 'undefined') {
+export async function search(query, params = "undefined") {
   try {
     const searchParams = new URLSearchParams(params).toString();
     const url = `${url1}/search?query=${query}&${searchParams}`;
-    const req = await axios.get(url, { headers });
+    const req = await axios.get(url, { headers: prod_headers });
     const { results } = req.data;
+    const { hasMore } = req.data;
+    const { offset } = req.data;
+    console.log(offset);
     return results;
   } catch (err) {
     console.error(err);
   }
 }
 
-async function searchTest(query, params = 'undefined') {
+async function searchTest(query, params = "undefined") {
   const searchParams = new URLSearchParams(params).toString();
   const url = `${url1}/search?query=${query}&${searchParams}`;
   const res = await axios.get(url, { headers });
@@ -52,17 +59,17 @@ async function searchTest(query, params = 'undefined') {
 
 export async function createLink(testResults) {
   let links = [];
-  console.log('test', testResults);
+  console.log("test", testResults);
   for (const i of testResults) {
     const { path } = i;
-    const isFile = (i.is_folder = false ? 'folder' : 'file');
+    const isFile = (i.is_folder = false ? "folder" : "file");
     try {
       const body = {
         path,
         file: isFile,
-        accessibility: 'password',
+        accessibility: "password",
       };
-      console.log('body', body);
+      console.log("body", body);
       const url = `${url1}/links`;
       const file = await axios.post(url, body, { headers });
       const { data } = file;

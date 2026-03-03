@@ -19,5 +19,3 @@ export function stripName(path) {
   // }
   // return fPath;
 }
-
-stripName(test);

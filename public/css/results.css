@@ -42,12 +42,12 @@ table tr:nth-child(even) {
 
 td {
   padding-left: 15px;
-  border-left: 1px solid black;
+  border: 1px solid black;
 }
 
-td:first-child {
+/* td:first-child {
   border-left: none;
-}
+} */
 
 #header {
   place-items: center;

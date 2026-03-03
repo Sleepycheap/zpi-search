@@ -5,14 +5,14 @@ import path from 'path';
 import fs from 'fs';
 
 const users = [
-  // {
-  //   username: 'Anthony',
-  //   password: '',
-  // },
-  // {
-  //   username: 'James',
-  //   password: 'ffdfffafdf',
-  // },
+  {
+    username: 'Admin',
+    password: await bcrypt.hash('password', 10),
+  },
+  {
+    username: 'James',
+    password: 'ffdfffafdf',
+  },
 ];
 
 export function getUsersTest() {
@@ -30,12 +30,15 @@ export async function createUser(username, password) {
   console.log(users);
 }
 
-// function loginUser(username) {
-//   const user = users.find((user) => user.username === username);
-
-//   if (!user) {
-//     console.log('User doesnt exist');
-//   } else {
-//     console.log('Logging in...');
-//   }
-//  }
+export async function loginUser(username, password) {
+  const user = users.find((user) => user.username === username);
+  const pass = user.password;
+  if (user && pass === password) {
+    console.log('Logging in...');
+    return true;
+  } else if (user && pass !== password) {
+    throw new Error('Password is incorrect');
+  } else if (!user) {
+    console.log('User does not exist');
+  }
+}

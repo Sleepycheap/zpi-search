@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    <%= title %>
+    ZPI Egnyte Search
   </title>
   <link rel="stylesheet" href="/css/display.css">
 </head>
 
 <body>
-  <% if (locals.user) {%>
+  <% if (locals.admin) {%>
     <section id="header">
       <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
       <h1 class="header">Search for files on Egnyte</h1>
@@ -32,7 +32,6 @@
     </div>
     <% } else { %>
       <h1>Please log in</h1>
-      <h3><a href="/register">or register</a></h3>
       <form action="/log-in" method="POST">
         <label for="username">Username</label>
         <input id="username" name="username" placeholder="first.last" type="text" />
@@ -41,7 +40,6 @@
         <button type="submit">Login</button>
       </form>
       <%}%>
-
 </body>
 
 </html>
