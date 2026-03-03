@@ -29,6 +29,15 @@
     </form>
   </section>
 
+  <section id="pagination">
+    <ul id="page-list">
+      <li><a>Previous</a></li>
+      <li>1</li>
+      <li>2</li>
+      <li>next</li>
+    </ul>
+  </section>
+
   <div id="results">
     <table class="results-table">
       <thead>
@@ -38,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        <% results.forEach(result=> { %>
+        <% data.forEach(result=> { %>
           <tr>
             <td scope="row" id="t-name" class="row">
               <%= result.name %>

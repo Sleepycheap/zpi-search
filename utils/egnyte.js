@@ -35,15 +35,15 @@ export async function getFolders(root) {
   }
 }
 
-export async function search(query, params = "undefined") {
+export async function search(query, params = "undefined", offset) {
   try {
+    console.log("offset", offset);
     const searchParams = new URLSearchParams(params).toString();
-    const url = `${url1}/search?query=${query}&${searchParams}`;
+    const url = `${url1}/search?query=${query}&${searchParams}&offset=${offset}`;
+    console.log("url", url);
     const req = await axios.get(url, { headers: prod_headers });
     const { results } = req.data;
     const { hasMore } = req.data;
-    const { offset } = req.data;
-    console.log(offset);
     return results;
   } catch (err) {
     console.error(err);
@@ -80,4 +80,17 @@ export async function createLink(testResults) {
       console.error(err);
     }
   }
+}
+
+function paginate(pageData) {
+  const { results } = pageData;
+  const { hasMore } = pageData;
+  let count = results.length;
+  let offset = 0;
+  const limit = 20;
+  let page = 1;
+  page++;
+  offset = offset + 20;
+  count = count + count;
+  return (page, offset, count);
 }
