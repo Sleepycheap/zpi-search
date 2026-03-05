@@ -1,5 +1,6 @@
 import { search } from "../utils/egnyte.js";
 import { stripName } from "../utils/stripName.js";
+import "dotenv/config";
 
 export async function searchResults(req, res) {
   const params = {

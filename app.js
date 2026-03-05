@@ -4,16 +4,18 @@ import { fileURLToPath } from "node:url";
 import axios from "axios";
 import { appendFile } from "node:fs";
 import session from "express-session";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
+import cookieParser from "cookie-parser";
+import ngrok from "@ngrok/ngrok";
 import { body, validationResult } from "express-validator";
-// import { getUser, createUser, loginUser } from './userDB.js';
 import { getUsers, createUser, getOneUser } from "./db/queries.js";
 import displayRouter from "./routes/displayRouter.js";
 import searchRouter from "./routes/searchRouter.js";
 import { searchResults } from "./controllers/searchController.js";
 import { pool } from "./db/pool.js";
+import * as cookie from "cookie";
+import { createLink } from "./utils/egnyte.js";
+import { contextsKey } from "express-validator/lib/base.js";
 
 const dirname = fileURLToPath(new URL(".", import.meta.url));
 const filePath = join(dirname, "views");
@@ -22,35 +24,46 @@ const utilPath = join(dirname, "utils");
 const dbPath = join(dirname, "db");
 const app = express();
 
+app.use(express.json());
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 app.set("views", filePath);
 app.set("view engine", "ejs");
-app.use(session({ secret: "otter", resave: false, saveUninitialized: false }));
-app.use(passport.session());
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      path: "/",
+      httpOnly: true,
+      secure: false,
+      maxAge: null,
+    },
+    name: "loginCookie",
+  }),
+);
+
+app.use(cookieParser());
+
+app.get("/login", (req, res) => {
+  res.render("login");
 });
 
-async function checkAdmin(username) {
-  const user = await getOneUser(username);
-  if (user.username === "Admin") {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 app.post("/log-in", async (req, res) => {
-  const user = req.body.username;
+  const { username } = req.body;
   const loginUser = process.env.LOGIN_UN;
   const loginPw = await bcrypt.hash(process.env.LOGIN_PW, 10);
   const match = await bcrypt.compare(req.body.password, loginPw);
-  if (match && user === loginUser) {
-    res.render("display", {
-      admin: true,
-    });
+  const userObj = { username };
+  if (match && username === loginUser) {
+    req.session.user = userObj;
+    const sesh = req.session;
+    const cookie = sesh.cookie;
+    console.log("session", sesh);
+    console.log("cookie", cookie);
+    console.log("username?", cookie.user);
+    res.redirect("/");
   } else {
     res.render("login-error");
   }
@@ -58,8 +71,53 @@ app.post("/log-in", async (req, res) => {
 
 app.get("/login-error", (req, res) => res.render("login-error"));
 
-const port = 8000;
+app.get("/cookie-test", (req, res) => {
+  const cookie = req.cookies || {};
+  const sessionData = req.session || {};
+  console.log("sesh", sessionData);
+  const { username } = cookie;
+  console.log(cookie);
 
+  if (req.session.user.username) {
+    res.send({ success: true, message: "User is correct" });
+  } else {
+    res.send({ success: false, message: "user is not correct" });
+  }
+});
+
+// app.use(getAuth);
+
+app.get("/", (req, res) => {
+  const sessionData = req.session || {};
+  if (sessionData.user) {
+    console.log("authenticated");
+    res.render("display");
+  } else {
+    console.log("sign in");
+    res.redirect("/login");
+  }
+});
+app.use("/search", searchRouter);
+
+function getAuth(req, res, next) {
+  console.log("user", res.locals.user);
+  if (res.locals.user === "Admin") {
+    res.locals.isAuthenticated = true;
+  }
+  return next();
+}
+
+app.use(getAuth);
+
+// app.get("/redirect", (req, res) => {
+//   const cookie = req.cookies || {};
+//   const sessionData = req.session;
+//   const {user} = sessionData;
+//   if (user.username) {
+//     res.
+//   }
+// });
+const port = 8000;
 app.listen(port, (err) => {
   if (err) {
     throw err;
@@ -67,5 +125,11 @@ app.listen(port, (err) => {
   console.log(`ZPI Search running on port: ${port}`);
 });
 
-app.use("/", displayRouter);
-app.use("/search", searchRouter);
+// (async function () {
+//   const listener = await ngrok.forward({
+//     addr: port,
+//     authtoken: process.env.NGROK_AUTHTOKEN,
+//     domain: process.env.NGROK_DOMAIN,
+//   });
+//   console.log("Ingress established at", listener.url());
+// })();

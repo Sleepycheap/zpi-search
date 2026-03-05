@@ -1,8 +1,8 @@
-import express from 'express';
-import { displayPage } from '../controllers/displayController.js';
+import express from "express";
+import { displayPage } from "../controllers/displayController.js";
 
 const displayRouter = express.Router();
 
-displayRouter.get('/', displayPage);
+displayRouter.get("/", displayPage);
 
 export default displayRouter;

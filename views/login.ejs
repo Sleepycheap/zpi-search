@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/login.css">
+
+</head>
+
+<body>
+  <section id="header">
+    <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
+    <h1 class="header">
+      <p>Please Login to search for files</p>
+    </h1>
+  </section>
+
+  <form action="/log-in" method="POST">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" />
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" />
+    <button type="submit">Login</button>
+  </form>
+  <%- include('partials/footer') %>
+
+</body>
+
+</html>

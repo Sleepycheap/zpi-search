@@ -11,39 +11,19 @@
 <body>
   <section id="header">
     <span class="img"><img src="https://zpi.com/wp-content/uploads/2018/06/Zephyr-Horizontal-02.png"></span>
-    <h1 class="search-header">Search Results for '<%= query %>'
+    <h1 class="search-header">
+      <p class="query-result">Search Results for '<%= query %>'</p>
     </h1>
-  </section>
-
-  <section id="search">
-    <form action="/search" method="POST" id="search">
-      <label for="query" class="q-label">Query: </label>
-      <input type="text" name="query" id="query" placeholder="'Florida' 'PDF'" />
-      <label for="folder">Folder path to search</label>
-      <select name="folder" id="folder-select">
-        <option value="Projects">Projects</option>
-        <option value="Design-Engineering">Design-Engineering</option>
-        <option value="Restoration & Maintenance">Restoration & Maintenance</option>
-      </select>
-      <button type="submit" class="s-btn">Search</button>
-    </form>
-  </section>
-
-  <section id="pagination">
-    <ul id="page-list">
-      <li><a>Previous</a></li>
-      <li>1</li>
-      <li>2</li>
-      <li>next</li>
-    </ul>
+    <a href="/" class="back">Back</a>
   </section>
 
   <div id="results">
     <table class="results-table">
       <thead>
         <tr>
-          <th scope="col" class="h-col">Name</th>
-          <th scope="col" class="h-col">Path</th>
+          <th scope="col" class="h-col h-name">Name</th>
+          <th scope="col" class="h-col h-path">Path</th>
+          <th scope="col" class="h-col h-upload">Uploaded By</th>
         </tr>
       </thead>
       <tbody>
@@ -66,11 +46,16 @@
                                   <td scope="row" id="t-path" class="row">
                                     <%= path %>
                                   </td>
+                                  <td scope="row" id="t-upload" class="row">
+                                    <%= result.uploaded_by %>
+                                  </td>
           </tr>
           <%});%>
       </tbody>
     </table>
   </div>
+  <%- include('partials/footer') %>
+
 </body>
 
 </html>

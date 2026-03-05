@@ -1,16 +1,30 @@
 body {
   background-color: white;
   color: black;
+  height: calc(100vh - 40px);
 }
 
 #results {
+  padding-top: 30px;
   place-items: center;
 }
 
 .h-col {
   border-bottom: 2px solid black;
-  width: 50%;
+  /* width: 100%; */
   font-size: larger;
+}
+
+.h-name {
+  width: 20%;
+}
+
+.h-path {
+  width: 60%;
+}
+
+.h-upload {
+  width: 10%;
 }
 
 th,
@@ -22,7 +36,6 @@ td {
 table {
   border: 1x solid black;
   border-collapse: collapse;
-  width: 80%;
   table-layout: auto;
 }
 
@@ -45,14 +58,45 @@ td {
   border: 1px solid black;
 }
 
-/* td:first-child {
-  border-left: none;
-} */
-
 #header {
   place-items: center;
 }
 
 h1 {
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
+}
+
+footer {
+  display: flex;
+  position: sticky;
+  margin-top: 22px;
+  height: 40px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  right: 0;
+  background-color: #5a4099;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+  margin-left: 30px;
+  color: whitesmoke;
+  font-family: "Lucida Console", Monaco, monospace;
+  letter-spacing: 2px;
+  word-spacing: 2px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+p.query-result {
+  color: black;
+}
+
+.back {
+  position: relative;
+  bottom: 60px;
+  left: 20px;
+  font-family: "Lucida Console", Monaco, monospace;
 }

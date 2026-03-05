@@ -37,10 +37,8 @@ export async function getFolders(root) {
 
 export async function search(query, params = "undefined", offset) {
   try {
-    console.log("offset", offset);
     const searchParams = new URLSearchParams(params).toString();
     const url = `${url1}/search?query=${query}&${searchParams}&offset=${offset}`;
-    console.log("url", url);
     const req = await axios.get(url, { headers: prod_headers });
     const { results } = req.data;
     const { hasMore } = req.data;
