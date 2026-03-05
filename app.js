@@ -1,21 +1,11 @@
 import express from "express";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import axios from "axios";
-import { appendFile } from "node:fs";
 import session from "express-session";
 import bcrypt from "bcryptjs";
 import cookieParser from "cookie-parser";
 import ngrok from "@ngrok/ngrok";
-import { body, validationResult } from "express-validator";
-import { getUsers, createUser, getOneUser } from "./db/queries.js";
-import displayRouter from "./routes/displayRouter.js";
 import searchRouter from "./routes/searchRouter.js";
-import { searchResults } from "./controllers/searchController.js";
-import { pool } from "./db/pool.js";
-import * as cookie from "cookie";
-import { createLink } from "./utils/egnyte.js";
-import { contextsKey } from "express-validator/lib/base.js";
 
 const dirname = fileURLToPath(new URL(".", import.meta.url));
 const filePath = join(dirname, "views");
@@ -85,8 +75,6 @@ app.get("/cookie-test", (req, res) => {
   }
 });
 
-// app.use(getAuth);
-
 app.get("/", (req, res) => {
   const sessionData = req.session || {};
   if (sessionData.user) {
@@ -109,14 +97,6 @@ function getAuth(req, res, next) {
 
 app.use(getAuth);
 
-// app.get("/redirect", (req, res) => {
-//   const cookie = req.cookies || {};
-//   const sessionData = req.session;
-//   const {user} = sessionData;
-//   if (user.username) {
-//     res.
-//   }
-// });
 const port = 8000;
 app.listen(port, (err) => {
   if (err) {
