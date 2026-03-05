@@ -105,6 +105,16 @@ app.listen(port, (err) => {
   console.log(`ZPI Search running on port: ${port}`);
 });
 
+process.stdin.resume();
+
+process.on("unhandledRejection", (err) => {
+  console.log("UNHANDLED REJECTION! Shutting down...");
+  logger.fatal(err, "UNCAUGHT EXCEPTION!");
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
 // (async function () {
 //   const listener = await ngrok.forward({
 //     addr: port,
