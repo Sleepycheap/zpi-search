@@ -35,14 +35,15 @@ export async function getFolders(root) {
   }
 }
 
-export async function search(query, params = "undefined", offset) {
+export async function search(query, params = "undefined", offset = 0) {
   try {
     const searchParams = new URLSearchParams(params).toString();
     const url = `${url1}/search?query=${query}&${searchParams}&offset=${offset}`;
     const req = await axios.get(url, { headers: prod_headers });
+    const { data } = req;
     const { results } = req.data;
     const { hasMore } = req.data;
-    return results;
+    return data;
   } catch (err) {
     console.error(err);
   }

@@ -50,9 +50,9 @@ app.post("/log-in", async (req, res) => {
     req.session.user = userObj;
     const sesh = req.session;
     const cookie = sesh.cookie;
-    console.log("session", sesh);
-    console.log("cookie", cookie);
-    console.log("username?", cookie.user);
+    // console.log("session", sesh);
+    // console.log("cookie", cookie);
+    // console.log("username?", cookie.user);
     res.redirect("/");
   } else {
     res.render("login-error");
@@ -64,9 +64,9 @@ app.get("/login-error", (req, res) => res.render("login-error"));
 app.get("/cookie-test", (req, res) => {
   const cookie = req.cookies || {};
   const sessionData = req.session || {};
-  console.log("sesh", sessionData);
+  // console.log("sesh", sessionData);
   const { username } = cookie;
-  console.log(cookie);
+  // console.log(cookie);
 
   if (req.session.user.username) {
     res.send({ success: true, message: "User is correct" });
@@ -78,17 +78,17 @@ app.get("/cookie-test", (req, res) => {
 app.get("/", (req, res) => {
   const sessionData = req.session || {};
   if (sessionData.user) {
-    console.log("authenticated");
+    // console.log("authenticated");
     res.render("display");
   } else {
-    console.log("sign in");
+    // console.log("sign in");
     res.redirect("/login");
   }
 });
 app.use("/search", searchRouter);
 
 function getAuth(req, res, next) {
-  console.log("user", res.locals.user);
+  // console.log("user", res.locals.user);
   if (res.locals.user === "Admin") {
     res.locals.isAuthenticated = true;
   }
@@ -98,7 +98,7 @@ function getAuth(req, res, next) {
 app.use(getAuth);
 
 const port = 8000;
-app.listen(process.env.PORT || port, (err) => {
+app.listen(port, (err) => {
   if (err) {
     throw err;
   }
@@ -115,11 +115,11 @@ process.on("unhandledRejection", (err) => {
   });
 });
 
-// (async function () {
-//   const listener = await ngrok.forward({
-//     addr: port,
-//     authtoken: process.env.NGROK_AUTHTOKEN,
-//     domain: process.env.NGROK_DOMAIN,
-//   });
-//   console.log("Ingress established at", listener.url());
-// })();
+(async function () {
+  const listener = await ngrok.forward({
+    addr: port,
+    authtoken: process.env.NGROK_AUTHTOKEN,
+    domain: process.env.NGROK_DOMAIN,
+  });
+  console.log("Ingress established at", listener.url());
+})();
