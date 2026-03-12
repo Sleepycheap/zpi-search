@@ -81,15 +81,15 @@ export async function createLink(testResults) {
   }
 }
 
-function paginate(pageData) {
-  const { results } = pageData;
-  const { hasMore } = pageData;
-  let count = results.length;
-  let offset = 0;
-  const limit = 20;
-  let page = 1;
-  page++;
-  offset = offset + 20;
-  count = count + count;
-  return (page, offset, count);
+export async function getLocks(path) {
+  const url = `https://splashtacular.egnyte.com/pubapi/v1/fs${path}?include_locks=true`;
+  const req = await axios.get(url, { headers: prod_headers });
+  const { uploaded_by, last_modified, lock_info } = req.data;
+  const displayName = lock_info.first_name + " " + lock_info.last_name;
+  const lockObj = {
+    Locked_by: displayName,
+    uploaded_by,
+    last_modified,
+  };
+  return lockObj;
 }

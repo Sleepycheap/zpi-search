@@ -11,10 +11,14 @@ export async function searchResults(req, res) {
     snippet_requested: false,
   };
 
-  const { query } = req.body;
+  const preQuery = req.body.query;
+  const { wildcard } = req.body;
+
+  const query = !wildcard ? '"' + preQuery + '"' : preQuery;
 
   const response = await getAllResults(query, params);
   console.log("result", response);
+  console.log("query", query);
   res.render("showResults", {
     query,
     data: response,

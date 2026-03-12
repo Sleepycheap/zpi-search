@@ -23,7 +23,7 @@
         <tr>
           <th scope="col" class="h-col h-name">Name</th>
           <th scope="col" class="h-col h-path">Path</th>
-          <th scope="col" class="h-col h-upload">Uploaded By</th>
+          <!-- <th scope="col" class="h-col h-upload">Uploaded By</th> -->
         </tr>
       </thead>
       <tbody>
@@ -47,16 +47,14 @@
                                     <td scope="row" id="t-path" class="row">
                                       <%= path %>
                                     </td>
-                                    <td scope="row" id="t-upload" class="row">
-                                      <%= result.uploaded_by %>
-                                    </td>
+
           </tr>
           <%});%>
       </tbody>
     </table>
   </div>
   <%- include('partials/footer') %>
-
+    <script src="/js/copypath.js"></script>
 </body>
 
 </html>
