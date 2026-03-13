@@ -98,7 +98,7 @@ function getAuth(req, res, next) {
 app.use(getAuth);
 
 const port = 8000;
-app.listen(port, (err) => {
+app.listen(process.env.PORT || port, (err) => {
   if (err) {
     throw err;
   }
